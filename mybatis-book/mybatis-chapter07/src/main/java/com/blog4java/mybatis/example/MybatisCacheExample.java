@@ -34,7 +34,6 @@ public class MybatisCacheExample {
         UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         // 执行Mapper方法，获取执行结果
         List<UserEntity> userList = userMapper.listAllUser();
-
         System.out.println(JSON.toJSONString(userList));
     }
 

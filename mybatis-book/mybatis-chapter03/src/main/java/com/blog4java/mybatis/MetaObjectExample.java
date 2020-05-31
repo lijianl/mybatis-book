@@ -36,13 +36,15 @@ public class MetaObjectExample {
             }
         };
         User user = new User(orders, "江荣波", 3);
+
+        // 对象的值
         MetaObject metaObject = SystemMetaObject.forObject(user);
         // 获取第一笔订单的商品名称
         System.out.println(metaObject.getValue("orders[0].goodsName"));
         // 获取第二笔订单的商品名称
         System.out.println(metaObject.getValue("orders[1].goodsName"));
         // 为属性设置值
-        metaObject.setValue("orders[1].orderNo","order20181113010139");
+        metaObject.setValue("orders[1].orderNo", "order20181113010139");
         // 判断User对象是否有orderNo属性
         System.out.println("是否有orderNo属性且orderNo属性有对应的Getter方法：" + metaObject.hasGetter("orderNo"));
         // 判断User对象是否有name属性

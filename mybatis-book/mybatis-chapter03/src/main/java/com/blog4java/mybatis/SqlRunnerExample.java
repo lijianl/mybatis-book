@@ -35,6 +35,7 @@ public class SqlRunnerExample {
     @Test
     public void testSelectOne() throws SQLException {
         SqlRunner sqlRunner = new SqlRunner(connection);
+        // 拼接sql
         String qryUserSql = new SQL() {{
             SELECT("*");
             FROM("user");
@@ -47,7 +48,7 @@ public class SqlRunnerExample {
     @Test
     public void testDelete() throws SQLException {
         SqlRunner sqlRunner = new SqlRunner(connection);
-        String deleteUserSql = new SQL(){{
+        String deleteUserSql = new SQL() {{
             DELETE_FROM("user");
             WHERE("id = ?");
         }}.toString();
@@ -57,7 +58,7 @@ public class SqlRunnerExample {
     @Test
     public void testUpdate() throws SQLException {
         SqlRunner sqlRunner = new SqlRunner(connection);
-        String updateUserSql = new SQL(){{
+        String updateUserSql = new SQL() {{
             UPDATE("user");
             SET("nick_name = ?");
             WHERE("id = ?");
@@ -68,13 +69,13 @@ public class SqlRunnerExample {
     @Test
     public void testInsert() throws SQLException {
         SqlRunner sqlRunner = new SqlRunner(connection);
-        String insertUserSql = new SQL(){{
+        String insertUserSql = new SQL() {{
             INSERT_INTO("user");
             INTO_COLUMNS("create_time,name,password,phone,nick_name");
             INTO_VALUES("?,?,?,?,?");
         }}.toString();
         String createTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        sqlRunner.insert(insertUserSql,createTime,"Jane","test","18700000000","J");
+        sqlRunner.insert(insertUserSql, createTime, "Jane", "test", "18700000000", "J");
     }
 
     @After

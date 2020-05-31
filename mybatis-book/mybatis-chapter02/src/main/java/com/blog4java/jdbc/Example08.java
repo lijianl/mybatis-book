@@ -19,6 +19,9 @@ public class Example08 {
             // 获取Connection对象
             Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:mybatis",
                     "sa", "");
+
+
+            // 能够获取数据库的原始信息
             DatabaseMetaData dmd = conn.getMetaData();
             System.out.println("数据库URL:" + dmd.getURL());
             System.out.println("数据库用户名:" + dmd.getUserName());

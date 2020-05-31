@@ -17,8 +17,9 @@ import java.util.Properties;
  * 使用Statement对象批量执行SQL语句
  */
 public class Example05 {
+
     @Before
-    public void initData() throws  Exception {
+    public void initData() throws Exception {
         // 初始化数据
         Class.forName("org.hsqldb.jdbcDriver");
         // 获取Connection对象
@@ -28,6 +29,7 @@ public class Example05 {
         ScriptRunner scriptRunner = new ScriptRunner(conn);
         // 不输出sql日志
         scriptRunner.setLogWriter(null);
+        // 执行sql脚本
         scriptRunner.runScript(Resources.getResourceAsReader("create-table.sql"));
     }
 
@@ -40,9 +42,12 @@ public class Example05 {
             InputStream configStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("database.properties");
             properties.load(configStream);
             dsf.setProperties(properties);
+
+            //
             DataSource dataSource = dsf.getDataSource();
             // 获取Connection对象
             Connection connection = dataSource.getConnection();
+            // sql语句
             Statement statement = connection.createStatement();
             statement.addBatch("insert into  " +
                     "user(create_time, name, password, phone, nick_name) " +
@@ -50,9 +55,10 @@ public class Example05 {
             statement.addBatch("insert into " +
                     "user (create_time, name, password, phone, nick_name) " +
                     "values('2010-10-24 10:20:30', 'User2', 'test', '18700002222', 'User2');");
+            // sql批量执行语句
             statement.executeBatch();
             statement.execute("select * from user");
-
+            // 执行的结果
             ResultSet result = statement.getResultSet();
             dumpRS(result);
             // 关闭连接
@@ -63,7 +69,9 @@ public class Example05 {
         }
     }
 
+    // 处理结果
     private void dumpRS(ResultSet resultSet) throws Exception {
+        // 结果原数据
         ResultSetMetaData metaData = resultSet.getMetaData();
         int columCount = metaData.getColumnCount();
         while (resultSet.next()) {

@@ -18,6 +18,7 @@ public class Example02 {
         DbUtils.initData();
         try {
             // 创建DataSource实例
+            //
             DataSource dataSource = new UnpooledDataSource("org.hsqldb.jdbcDriver",
                     "jdbc:hsqldb:mem:mybatis", "sa", "");
             // 获取Connection对象

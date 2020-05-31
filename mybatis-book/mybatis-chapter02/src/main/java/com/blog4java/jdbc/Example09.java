@@ -15,7 +15,7 @@ import java.sql.*;
 public class Example09 {
 
     @Before
-    public void initData() throws  Exception {
+    public void initData() throws Exception {
         // 初始化数据
         Class.forName("org.hsqldb.jdbcDriver");
         // 获取Connection对象
@@ -40,16 +40,25 @@ public class Example09 {
                     "values('2010-10-24 10:20:30','User1','test','18700001111','User1')";
             String sql2 = "insert into user(create_time, name, password, phone, nick_name) " +
                     "values('2010-10-24 10:20:30','User2','test','18700001111','User2')";
+
+            // 关闭自动提交
             conn.setAutoCommit(false);
+
+            //
             Statement stmt = conn.createStatement();
             stmt.executeUpdate(sql1);
-            // 创建保存点
+
+            // 创建保存点=>事务回滚使用
             Savepoint savepoint = conn.setSavepoint("SP1");
             stmt.executeUpdate(sql2);
             // 回滚到保存点
             conn.rollback(savepoint);
+
+            // 事务提交
             conn.commit();
-            ResultSet rs  = conn.createStatement().executeQuery("select * from user ");
+
+            // select
+            ResultSet rs = conn.createStatement().executeQuery("select * from user ");
             DbUtils.dumpRS(rs);
             IOUtils.closeQuietly(stmt);
             IOUtils.closeQuietly(conn);

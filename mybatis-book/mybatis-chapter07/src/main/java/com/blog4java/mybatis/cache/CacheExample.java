@@ -8,6 +8,10 @@ import org.junit.Test;
 
 public class CacheExample {
 
+
+    /**
+     * 缓存的实现类型
+     */
     @Test
     public void testCache() {
         final int N = 100000;
@@ -24,14 +28,16 @@ public class CacheExample {
             cache.putObject(i, i);
             ((TransactionalCache) cache).commit();
         }
+        // 缓存的大小
         System.out.println(cache.getSize());
     }
 
     @Test
     public void testCacheBuilder() {
         final int N = 100000;
+        //
         Cache cache = new CacheBuilder("com.blog4java.mybatis.example.mapper.UserMapper")
-                .implementation( PerpetualCache.class)
+                .implementation(PerpetualCache.class)
                 .addDecorator(LruCache.class)
                 .clearInterval(10 * 60L)
                 .size(1024)

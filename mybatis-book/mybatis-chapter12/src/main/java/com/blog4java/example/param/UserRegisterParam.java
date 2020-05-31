@@ -5,6 +5,10 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+
+/**
+ * param命名的方式 => 接口+Param
+ */
 @Data
 public class UserRegisterParam {
     @NotNull(message = "用户名不能为空")
@@ -14,7 +18,7 @@ public class UserRegisterParam {
     @NotNull(message = "手机号不能为空")
     private String phone;
     @NotNull(message = "性别不能为空")
-    @Pattern(regexp = "(male|female)" ,message = "性别输入不合法")
+    @Pattern(regexp = "(male|female)", message = "性别输入不合法")
     private String gender;
     private String nickName;
 }

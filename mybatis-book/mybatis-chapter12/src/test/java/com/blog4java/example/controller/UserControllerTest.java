@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class UserControllerTest extends ApplicationTest {
 
+    //
     @Test
     public void testUserRegister() throws Exception {
         String response = mockMvc.perform(

@@ -13,8 +13,10 @@ public class ConfigurationExample {
     @Test
     public void testConfiguration() throws IOException {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+
         // 创建XMLConfigBuilder实例
         XMLConfigBuilder builder = new XMLConfigBuilder(reader);
+
         // 调用XMLConfigBuilder.parse（）方法，解析XML创建Configuration对象
         Configuration conf = builder.parse();
     }

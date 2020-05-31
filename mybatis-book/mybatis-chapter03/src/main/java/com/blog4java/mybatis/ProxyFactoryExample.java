@@ -26,18 +26,21 @@ public class ProxyFactoryExample {
     @Test
     public void testProxyFactory() {
         // 创建ProxyFactory对象
+        // 代理的具体实现
         ProxyFactory proxyFactory = new JavassistProxyFactory();
-        Order order = new Order("gn20170123","《Mybatis源码深度解析》图书");
+        // bean
+        Order order = new Order("gn20170123", "《Mybatis源码深度解析》图书");
+        // 构造
         ObjectFactory objectFactory = new DefaultObjectFactory();
         // 调用ProxyFactory对象的createProxy（）方法创建代理对象
         Object proxyOrder = proxyFactory.createProxy(order
-                ,mock(ResultLoaderMap.class)
-                ,mock(Configuration.class)
-                ,objectFactory
-                ,Arrays.asList(String.class,String.class)
-                ,Arrays.asList(order.getOrderNo(),order.getGoodsName())
+                , mock(ResultLoaderMap.class)
+                , mock(Configuration.class)
+                , objectFactory
+                , Arrays.asList(String.class, String.class)
+                , Arrays.asList(order.getOrderNo(), order.getGoodsName())
         );
         System.out.println(proxyOrder.getClass());
-        System.out.println(((Order)proxyOrder).getGoodsName());
+        System.out.println(((Order) proxyOrder).getGoodsName());
     }
 }

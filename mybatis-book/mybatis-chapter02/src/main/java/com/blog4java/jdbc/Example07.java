@@ -16,7 +16,7 @@ import java.sql.Statement;
  */
 public class Example07 {
     @Before
-    public void initData() throws  Exception {
+    public void initData() throws Exception {
         // 初始化数据
         Class.forName("org.hsqldb.jdbcDriver");
         // 获取Connection对象
@@ -40,9 +40,11 @@ public class Example07 {
             Statement stmt = conn.createStatement();
             String sql = "insert into user(create_time, name, password, phone, nick_name) " +
                     "values('2010-10-24 10:20:30','User1','test','18700001111','User1');";
+            // 主键自增=1
             stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            // id
             ResultSet genKeys = stmt.getGeneratedKeys();
-            if(genKeys.next()) {
+            if (genKeys.next()) {
                 System.out.println("自增长主键：" + genKeys.getInt(1));
             }
             IOUtils.closeQuietly(stmt);

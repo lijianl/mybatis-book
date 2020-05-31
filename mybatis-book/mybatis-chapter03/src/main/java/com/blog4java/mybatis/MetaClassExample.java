@@ -19,6 +19,9 @@ public class MetaClassExample {
         String goodsName;
     }
 
+    /**
+     * classmeta
+     */
     @Test
     public void testMetaClass() {
         MetaClass metaClass = MetaClass.forClass(Order.class, new DefaultReflectorFactory());
@@ -37,7 +40,7 @@ public class MetaClassExample {
         Invoker invoker = metaClass.getGetInvoker("orderNo");
         try {
             // 通过Invoker对象调用Getter方法获取属性值
-            Object orderNo = invoker.invoke(new Order("order20171024010248","《Mybatis源码深度解析》图书"), null);
+            Object orderNo = invoker.invoke(new Order("order20171024010248", "《Mybatis源码深度解析》图书"), null);
             System.out.println(orderNo);
         } catch (IllegalAccessException e) {
             e.printStackTrace();

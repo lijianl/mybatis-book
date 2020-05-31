@@ -22,6 +22,19 @@ public class ExecutorExample {
     public void initData() {
         DbUtils.initData();
     }
+
+
+    /**
+     * {@link org.apache.ibatis.executor.CachingExecutor  二级缓存}
+     * {@link MappedStatement  => sql}
+     * {@link org.apache.ibatis.executor.statement.StatementHandler 语句执行}
+     * {@link org.apache.ibatis.type.TypeHandler}
+     * {@link org.apache.ibatis.scripting.defaults.DefaultParameterHandler}
+     * {@link org.apache.ibatis.executor.resultset.DefaultResultSetHandler}
+     *
+     * @throws IOException
+     * @throws SQLException
+     */
     @Test
     public void testExecutor() throws IOException, SQLException {
         // 获取配置文件输入流
@@ -34,13 +47,15 @@ public class ExecutorExample {
         // 从Configuration对象中获取描述SQL配置的MappedStatement对象
         MappedStatement listAllUserStmt = configuration.getMappedStatement(
                 "com.blog4java.mybatis.com.blog4java.mybatis.example.mapper.UserMapper.listAllUser");
+
+
         //创建ReuseExecutor实例
         Executor reuseExecutor = configuration.newExecutor(
                 new JdbcTransaction(sqlSession.getConnection()),
                 ExecutorType.REUSE
         );
         // 调用query()方法执行查询操作
-        List<UserEntity> userList =  reuseExecutor.query(listAllUserStmt,
+        List<UserEntity> userList = reuseExecutor.query(listAllUserStmt,
                 null,
                 RowBounds.DEFAULT,
                 Executor.NO_RESULT_HANDLER);

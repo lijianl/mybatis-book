@@ -6,7 +6,7 @@ import java.io.IOException;
 public abstract class IOUtils {
 
     public static void closeQuietly(Closeable closeable) {
-        if(closeable != null) {
+        if (closeable != null) {
             try {
                 closeable.close();
             } catch (IOException e) {
@@ -16,7 +16,7 @@ public abstract class IOUtils {
     }
 
     public static void closeQuietly(AutoCloseable closeable) {
-        if(closeable != null) {
+        if (closeable != null) {
             try {
                 closeable.close();
             } catch (Exception e) {

@@ -10,15 +10,19 @@ import org.junit.Test;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
 import java.util.Properties;
 
 /**
  * 通过ParameterMetaData获取参数信息
  */
 public class Example06 {
+
     @Before
-    public void initData() throws  Exception {
+    public void initData() throws Exception {
         // 初始化数据
         Class.forName("org.hsqldb.jdbcDriver");
         // 获取Connection对象
@@ -42,18 +46,23 @@ public class Example06 {
             properties.load(configStream);
             dsf.setProperties(properties);
             DataSource dataSource = dsf.getDataSource();
+
+
             // 获取Connection对象
             Connection connection = dataSource.getConnection();
+            // 预编译
             PreparedStatement stmt = connection.prepareStatement("insert into  " +
                     "user(create_time, name, password, phone, nick_name) " +
                     "values(?,?,?,?,?);");
-            stmt.setString(1,"2010-10-24 10:20:30");
-            stmt.setString(2,"User1");
-            stmt.setString(3,"test");
-            stmt.setString(4,"18700001111");
-            stmt.setString(5,"User1");
+            stmt.setString(1, "2010-10-24 10:20:30");
+            stmt.setString(2, "User1");
+            stmt.setString(3, "test");
+            stmt.setString(4, "18700001111");
+            stmt.setString(5, "User1");
+
+            // 参数类型
             ParameterMetaData pmd = stmt.getParameterMetaData();
-            for(int i = 1; i <= pmd.getParameterCount(); i++) {
+            for (int i = 1; i <= pmd.getParameterCount(); i++) {
                 String typeName = pmd.getParameterTypeName(i);
                 String className = pmd.getParameterClassName(i);
                 System.out.println("第" + i + "个参数，" + "typeName:" + typeName + ", className:" + className);

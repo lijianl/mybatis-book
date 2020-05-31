@@ -20,8 +20,10 @@ package org.apache.ibatis.jdbc;
  */
 public class SQL extends AbstractSQL<SQL> {
 
+  // 返回当前对象
   @Override
   public SQL getSelf() {
+    //
     return this;
   }
 

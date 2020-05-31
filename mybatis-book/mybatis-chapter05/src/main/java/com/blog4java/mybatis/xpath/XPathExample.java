@@ -31,22 +31,27 @@ public class XPathExample {
             // 创建DocumentBuilder实例
             DocumentBuilder builder = factory.newDocumentBuilder();
             InputStream inputSource = Resources.getResourceAsStream("users.xml");
+            // xml文件解析的对象doc
             Document doc = builder.parse(inputSource);
+
+
             // 获取XPath实例
             XPath xpath = XPathFactory.newInstance().newXPath();
             // 执行XPath表达式，获取节点信息
-            NodeList nodeList = (NodeList)xpath.evaluate("/users/*", doc, XPathConstants.NODESET);
+            // 指令路径的所有节点
+            // XPathConstants.NODESET 节点的类型
+            NodeList nodeList = (NodeList) xpath.evaluate("/users/*", doc, XPathConstants.NODESET);
             List<UserEntity> userList = new ArrayList<>();
-            for(int i=1; i < nodeList.getLength() + 1; i++) {
-                String path = "/users/user["+i+"]";
-                String id = (String)xpath.evaluate(path + "/@id", doc, XPathConstants.STRING);
-                String name = (String)xpath.evaluate(path + "/name", doc, XPathConstants.STRING);
-                String createTime = (String)xpath.evaluate(path + "/createTime", doc, XPathConstants.STRING);
-                String passward = (String)xpath.evaluate(path + "/passward", doc, XPathConstants.STRING);
-                String phone = (String)xpath.evaluate(path + "/phone", doc, XPathConstants.STRING);
-                String nickName = (String)xpath.evaluate(path + "/nickName", doc, XPathConstants.STRING);
+            for (int i = 1; i < nodeList.getLength() + 1; i++) {
+                String path = "/users/user[" + i + "]";
+                String id = (String) xpath.evaluate(path + "/@id", doc, XPathConstants.STRING);
+                String name = (String) xpath.evaluate(path + "/name", doc, XPathConstants.STRING);
+                String createTime = (String) xpath.evaluate(path + "/createTime", doc, XPathConstants.STRING);
+                String passward = (String) xpath.evaluate(path + "/passward", doc, XPathConstants.STRING);
+                String phone = (String) xpath.evaluate(path + "/phone", doc, XPathConstants.STRING);
+                String nickName = (String) xpath.evaluate(path + "/nickName", doc, XPathConstants.STRING);
                 // 调用buildUserEntity()方法，构建UserEntity对象
-                UserEntity userEntity = buildUserEntity(id,name, createTime, passward, phone, nickName);
+                UserEntity userEntity = buildUserEntity(id, name, createTime, passward, phone, nickName);
                 userList.add(userEntity);
             }
             System.out.println(JSON.toJSONString(userList));
@@ -55,20 +60,25 @@ public class XPathExample {
         }
     }
 
-    private UserEntity buildUserEntity(String id,String name,
+    private UserEntity buildUserEntity(String id, String name,
                                        String createTime, String passward,
                                        String phone, String nickName)
             throws IllegalAccessException, InvocationTargetException {
+
+        //
         UserEntity userEntity = new UserEntity();
+        // date
         DateConverter dateConverter = new DateConverter(null);
         dateConverter.setPattern("yyyy-MM-dd HH:mm:ss");
-        ConvertUtils.register(dateConverter,Date.class);
-        BeanUtils.setProperty(userEntity,"id",id);
-        BeanUtils.setProperty(userEntity,"name",name);
-        BeanUtils.setProperty(userEntity,"createTime",createTime);
-        BeanUtils.setProperty(userEntity,"passward",passward);
-        BeanUtils.setProperty(userEntity,"phone",phone);
-        BeanUtils.setProperty(userEntity,"nickName",nickName);
+        ConvertUtils.register(dateConverter, Date.class);
+
+        // 设置bean
+        BeanUtils.setProperty(userEntity, "id", id);
+        BeanUtils.setProperty(userEntity, "name", name);
+        BeanUtils.setProperty(userEntity, "createTime", createTime);
+        BeanUtils.setProperty(userEntity, "passward", passward);
+        BeanUtils.setProperty(userEntity, "phone", phone);
+        BeanUtils.setProperty(userEntity, "nickName", nickName);
         return userEntity;
     }
 }

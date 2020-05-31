@@ -16,19 +16,23 @@ import java.sql.Connection;
 import java.util.Properties;
 
 public class Example04 {
+
     @Before
     public void before() throws IOException {
         DataSourceFactory dsf = new UnpooledDataSourceFactory();
+
         Properties properties = new Properties();
         InputStream configStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("database.properties");
         properties.load(configStream);
         dsf.setProperties(properties);
+        // 获取数据源
         DataSource dataSource = dsf.getDataSource();
         try {
             Properties jndiProps = new Properties();
             jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
             jndiProps.put(Context.URL_PKG_PREFIXES, "org.apache.naming");
             Context ctx = new InitialContext(jndiProps);
+            // 绑定服务
             ctx.bind("java:TestDC", dataSource);
         } catch (NamingException e) {
             e.printStackTrace();
@@ -38,10 +42,14 @@ public class Example04 {
     @Test
     public void testJndi() {
         try {
+
             Properties jndiProps = new Properties();
             jndiProps.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
             jndiProps.put(Context.URL_PKG_PREFIXES, "org.apache.naming");
             Context ctx = new InitialContext(jndiProps);
+
+            // 获取服务
+            // 上下文=>spel语言的设计
             DataSource dataSource = (DataSource) ctx.lookup("java:TestDC");
             Connection conn = dataSource.getConnection();
             Assert.assertNotNull(conn);

@@ -22,10 +22,14 @@ public class Example03 {
         try {
             // 创建DataSource实例
             DataSourceFactory dsf = new UnpooledDataSourceFactory();
+
+            // 初始化DataSourceFactory
             Properties properties = new Properties();
             InputStream configStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("database.properties");
             properties.load(configStream);
             dsf.setProperties(properties);
+
+            // 获取DataSource
             DataSource dataSource = dsf.getDataSource();
             // 获取Connection对象
             Connection connection = dataSource.getConnection();

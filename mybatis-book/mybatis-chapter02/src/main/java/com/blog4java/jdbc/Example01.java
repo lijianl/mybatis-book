@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.sql.*;
 
 public class Example01 {
+
     @Test
     public void testJdbc() {
         // 初始化数据
@@ -17,13 +18,15 @@ public class Example01 {
             // 获取Connection对象
             Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:mybatis",
                     "sa", "");
+            // sql语句
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from user");
-            // 遍历ResultSet
+            // 遍历ResultSet=>column
             ResultSetMetaData metaData = resultSet.getMetaData();
             int columCount = metaData.getColumnCount();
             while (resultSet.next()) {
                 for (int i = 1; i <= columCount; i++) {
+                    //=>
                     String columName = metaData.getColumnName(i);
                     String columVal = resultSet.getString(columName);
                     System.out.println(columName + ":" + columVal);

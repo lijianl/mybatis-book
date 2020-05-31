@@ -6,14 +6,18 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+
+// 接口namespace
 public interface UserMapper {
 
+    // xml
     List<UserEntity> listAllUser();
 
+    // 注解
     @Select("select * from user where id=#{userId,jdbcType=INTEGER}")
     UserEntity getUserById(@Param("userId") String userId);
 
-    List<UserEntity> getUserByEntity( UserEntity user);
+    List<UserEntity> getUserByEntity(UserEntity user);
 
     UserEntity getUserByPhone(@Param("phone") String phone);
 

@@ -12,9 +12,12 @@ public class ObjectFactoryExample {
 
     @Test
     public void testObjectFactory() {
+        // 默认构造函数
         ObjectFactory objectFactory = new DefaultObjectFactory();
+        // 获取对象
         List<Integer> list = objectFactory.create(List.class);
-        Map<String,String> map = objectFactory.create(Map.class);
+        // =>map
+        Map<String, String> map = objectFactory.create(Map.class);
         list.addAll(Arrays.asList(1, 2, 3));
         map.put("test", "test");
         System.out.println(list);

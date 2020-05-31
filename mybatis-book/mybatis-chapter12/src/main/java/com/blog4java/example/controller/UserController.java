@@ -14,15 +14,16 @@ import java.util.List;
 @RestController
 @RequestMapping("user")
 public class UserController {
+
+
     @Resource
     private UserService userService;
 
     @RequestMapping("register")
-    public String userRegister(@Validated UserRegisterParam param)
-            throws Exception {
+    public String userRegister(@Validated UserRegisterParam param) throws Exception {
         User user = new User();
-        BeanUtils.copyProperties(user,param);
-        if(userService.userRegister(user)) {
+        BeanUtils.copyProperties(user, param);
+        if (userService.userRegister(user)) {
             return "注册成功";
         }
         return "注册失败";

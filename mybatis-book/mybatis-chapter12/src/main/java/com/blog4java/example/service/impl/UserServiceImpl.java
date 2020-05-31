@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
         String createTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                 .format(LocalDateTime.now());
         user.setCreateTime(createTime);
-        if(userMapper.insert(user)>0) {
+        if (userMapper.insert(user) > 0) {
             return true;
         }
         return false;

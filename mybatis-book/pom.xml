@@ -3,15 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.1.RELEASE</version>
     </parent>
+
+
     <groupId>com.blog4java</groupId>
     <artifactId>mybatis-book</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
         <module>mybatis-common</module>
         <module>mybatis-chapter01</module>
@@ -26,11 +30,10 @@
         <module>mybatis-chapter10</module>
         <module>mybatis-chapter11</module>
         <module>mybatis-chapter12</module>
-
-
         <module>mybatis-plugin</module>
-
     </modules>
+
+
     <build>
         <resources>
             <resource>
@@ -67,6 +70,14 @@
             <scope>compile</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>ognl</groupId>
             <artifactId>ognl</artifactId>
@@ -75,6 +86,8 @@
             <optional>true</optional>
         </dependency>
 
+
+        <!--内存数据库-->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -94,6 +107,8 @@
             <version>3.5.0-SNAPSHOT</version>
         </dependency>
 
+
+        <!--所有项目共同依赖mybatis-common-->
         <dependency>
             <groupId>com.blog4java</groupId>
             <artifactId>mybatis-common</artifactId>
@@ -112,6 +127,7 @@
             <version>1.16.18</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javassist</groupId>
             <artifactId>javassist</artifactId>
