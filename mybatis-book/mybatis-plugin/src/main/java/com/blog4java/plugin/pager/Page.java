@@ -1,6 +1,12 @@
 package com.blog4java.plugin.pager;
 
-public class Page<T>  implements Paginable<T> {
+
+/**
+ * 基本功能的实现，分页实际操作的对象
+ *
+ * @param <T>
+ */
+public class Page<T> implements Paginable<T> {
 
     public static final int DEFAULT_PAGE_SIZE = 10; // 默认每页记录数
 

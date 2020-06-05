@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface UserMapper {
 
+    /**
+     * 分页的使用
+     *
+     * @param query
+     * @return
+     */
     @Select("select * from user")
     List<UserEntity> getUserPageable(UserQuery query);
 

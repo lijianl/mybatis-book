@@ -18,22 +18,31 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+
+/**
+ * 分页插件实现的基本逻辑
+ */
 @Intercepts({
         @Signature(method = "prepare", type = StatementHandler.class, args = {Connection.class, Integer.class})
 })
 public class PageInterceptor implements Interceptor {
 
+    /*数据库的类型*/
     private String databaseType;
 
     public Object intercept(Invocation invocation) throws Throwable {
         // 获取拦截的目标对象
         RoutingStatementHandler handler = (RoutingStatementHandler) invocation.getTarget();
         StatementHandler delegate = (StatementHandler) ReflectionUtils.getFieldValue(handler, "delegate");
+
         BoundSql boundSql = delegate.getBoundSql();
         // 获取参数对象，当参数对象为Page的子类时执行分页操作
         Object parameterObject = boundSql.getParameterObject();
+
+        // 处理分页逻辑
         if (parameterObject instanceof Page<?>) {
             Page<?> page = (Page<?>) parameterObject;
+
             MappedStatement mappedStatement = (MappedStatement) ReflectionUtils.getFieldValue(delegate, "mappedStatement");
             Connection connection = (Connection) invocation.getArgs()[0];
             String sql = boundSql.getSql();
@@ -54,6 +63,7 @@ public class PageInterceptor implements Interceptor {
      * 拦截器对应的封装原始对象的方法
      */
     public Object plugin(Object target) {
+        // 封装代理
         return Plugin.wrap(target, this);
     }
 
@@ -93,6 +103,7 @@ public class PageInterceptor implements Interceptor {
      * @return Mysql数据库分页语句
      */
     private String getMysqlPageSql(Page<?> page, StringBuffer sqlBuffer) {
+        // limit offset,size
         int offset = (page.getPageNo() - 1) * page.getPageSize();
         sqlBuffer.append(" limit ").append(offset).append(",").append(page.getPageSize());
         return sqlBuffer.toString();
@@ -142,6 +153,7 @@ public class PageInterceptor implements Interceptor {
         List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
         BoundSql countBoundSql = new BoundSql(mappedStatement.getConfiguration(), countSql, parameterMappings, page);
         ParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, page, countBoundSql);
+        // 构造新的sql语句
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
@@ -167,6 +179,7 @@ public class PageInterceptor implements Interceptor {
      * @return
      */
     private String getCountSql(String sql) {
+        // sql.subString
         return "select count(1) " + sql.substring(sql.toLowerCase().indexOf("from"));
     }
 

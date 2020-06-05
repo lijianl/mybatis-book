@@ -7,7 +7,7 @@ public abstract class ReflectionUtils {
     /**
      * 利用反射获取指定对象的指定属性
      *
-     * @param target 目标对象
+     * @param target    目标对象
      * @param fieldName 目标属性
      * @return 目标属性的值
      */
@@ -28,10 +28,8 @@ public abstract class ReflectionUtils {
     /**
      * 利用反射获取指定对象里面的指定属性
      *
-     * @param target
-     *            目标对象
-     * @param fieldName
-     *            目标属性
+     * @param target    目标对象
+     * @param fieldName 目标属性
      * @return 目标字段
      */
     private static Field getField(Object target, String fieldName) {
@@ -50,8 +48,8 @@ public abstract class ReflectionUtils {
     /**
      * 利用反射设置指定对象的指定属性为指定的值
      *
-     * @param target 目标对象
-     * @param fieldName 目标属性
+     * @param target     目标对象
+     * @param fieldName  目标属性
      * @param fieldValue 目标值
      */
     public static void setFieldValue(Object target, String fieldName, String fieldValue) {
